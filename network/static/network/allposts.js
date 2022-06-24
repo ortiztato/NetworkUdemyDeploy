@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelector('#nametitle').addEventListener('click', () => {
     document.querySelector('#newpostview').style.display = 'block';
     nametitle = document.querySelector('#nametitle').innerText;
+    nametitle = nametitle.toLowerCase()
     counter = 0;
     loaduser(nametitle);
   })
