@@ -1,3 +1,8 @@
+
+// loads index and event listeners
+
+
+
 var counter = 0
 var quantity = 10;
 

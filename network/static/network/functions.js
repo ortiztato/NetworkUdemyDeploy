@@ -1,3 +1,8 @@
+
+// most of UI actions
+// lot of these functions could have been done on the backend but the point of this project was to practice javascript
+
+
 var counter = 0
 var quantity = 10;
 
