@@ -19,6 +19,8 @@ def allposts(request):
     return render(request, "network/allposts.html")
 
 
+# user authentication
+
 def login_view(request):
     if request.method == "POST":
 
@@ -39,10 +41,14 @@ def login_view(request):
         return render(request, "network/login.html")
 
 
+
+
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
+
+# user register
 
 def register(request):
     if request.method == "POST":
@@ -70,6 +76,9 @@ def register(request):
     else:
         return render(request, "network/register.html")
 
+
+# creating a post
+
 @csrf_exempt
 @login_required
 def createpost(request):
@@ -89,6 +98,8 @@ def createpost(request):
 
     return JsonResponse({"message": "Email sent successfully."}, status=201)
 
+
+# loads 10 posts with pagination
 
 def loadposts(request):
     start = int(request.GET.get("start") or 0)
@@ -114,6 +125,9 @@ def loadposts(request):
             "likedposts": list(likedposts)
     }
     return JsonResponse(data)
+
+
+# loads a especific user data and posts
 
 def loaduserposts(request, creator):
     usercreator = User.objects.get(username = creator)
@@ -160,6 +174,9 @@ def loaduserposts(request, creator):
     #return JsonResponse([post.serialize() for post in posts], safe=False)
     return JsonResponse(data)
 
+
+# user follow action
+
 @csrf_exempt
 def follow(request):
     if request.method == "PUT":
@@ -181,6 +198,9 @@ def follow(request):
         return JsonResponse({
             "error": "PUT request required."
         }, status=400)
+
+
+# loads the posts of the users beign followed
 
 def loadfollowing(request):
     followed = Follow.objects.filter(userfollower=request.user).values('userfollowed_id')
@@ -209,6 +229,7 @@ def loadfollowing(request):
     }
     return JsonResponse(data)
 
+
 @csrf_exempt
 def editpost(request):
     if request.method == "PUT":
@@ -225,6 +246,9 @@ def editpost(request):
         return JsonResponse({
             "error": "PUT request required."
         }, status=400)
+
+
+# like action
 
 @csrf_exempt
 def like(request):
